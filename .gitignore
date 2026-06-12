@@ -2,7 +2,8 @@ data/sample/
 *.pyc
 __pycache__/
 .env
-logs/
+logs/*
+!logs/.gitkeep
 *.log
 .pytest_cache/
 .coverage
