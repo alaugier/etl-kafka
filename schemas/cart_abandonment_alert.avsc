@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "CartAbandonmentAlert",
+  "namespace": "com.ecommerce",
+  "doc": "Alert emitted when cart abandonment rate exceeds threshold for a category",
+  "fields": [
+    {"name": "alert_time",        "type": "string"},
+    {"name": "user_id",           "type": "long"},
+    {"name": "user_session",      "type": "string"},
+    {"name": "category_l1",       "type": "string"},
+    {"name": "abandonment_rate",  "type": "float"},
+    {"name": "cart_count",        "type": "int"},
+    {"name": "purchase_count",    "type": "int"}
+  ]
+}

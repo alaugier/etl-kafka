@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "name": "EventClean",
+  "namespace": "com.ecommerce",
+  "doc": "Cleaned and enriched ecommerce event ready for sinks",
+  "fields": [
+    {"name": "event_time",   "type": "string"},
+    {"name": "event_type",   "type": "string"},
+    {"name": "product_id",   "type": "long"},
+    {"name": "category_id",  "type": "string"},
+    {"name": "category_l1",  "type": "string"},
+    {"name": "category_l2",  "type": "string"},
+    {"name": "brand",        "type": "string"},
+    {"name": "price",        "type": "double"},
+    {"name": "user_id",      "type": "long"},
+    {"name": "user_session", "type": "string"}
+  ]
+}
