@@ -35,7 +35,7 @@ python src/data_prep.py --input /chemin/vers/2019-Oct.csv \
 ### 2. Producer — CSV → ecommerce-raw (Issue #4)
 
 ```bash
-PYTHONPATH=src python src/producer.py
+python src/producer.py
 # ou : make producer
 ```
 
@@ -44,7 +44,7 @@ Débit mesuré : **~137 000 msg/s**. Vérifier via Kafdrop : [http://localhost:9
 ### 3. Consumer — Transformation ETL (Issue #5)
 
 ```bash
-PYTHONPATH=src python src/consumer.py
+python src/consumer.py
 # ou : make consumer
 ```
 
@@ -53,7 +53,7 @@ Transformations : nettoyage nulls, parsing `category_code`, normalisation timest
 ### 4. Pipeline complet — Dual sink (Issue #8)
 
 ```bash
-PYTHONPATH=src python src/pipeline.py
+python src/pipeline.py
 # ou : make pipeline
 ```
 
@@ -62,7 +62,7 @@ Débit mesuré : **~7 800 msg/s**. Écrit dans PostgreSQL et Elasticsearch simul
 ### 5. Détecteur d'abandon de panier (Issue #9)
 
 ```bash
-PYTHONPATH=src python src/cart_abandonment_detector.py
+python src/cart_abandonment_detector.py
 # ou : make detector
 ```
 
@@ -87,7 +87,7 @@ make test
 # → pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
-Couverture CI : **> 70%** (seuil `--cov-fail-under=70`). Tests 100% unitaires (Kafka, PostgreSQL, Elasticsearch mockés).
+Couverture CI : **88%** (55 tests, Python 3.11 et 3.12). Tests 100% unitaires (Kafka, PostgreSQL, Elasticsearch mockés).
 
 ## Architecture
 
@@ -139,7 +139,8 @@ etl_kafka/
 │   ├── test_producer.py
 │   ├── test_pipeline.py
 │   ├── test_cart_abandonment.py
-│   └── test_sinks.py
+│   ├── test_sinks.py
+│   └── test_avro.py
 └── docs/
     ├── architecture.md
     └── kafka_cheatsheet.md
@@ -159,4 +160,5 @@ etl_kafka/
 - [x] Pipeline : ~7 800 msg/s, 638 003 lignes PostgreSQL
 - [x] Crash-test : redémarrage sans perte ni doublon (exactly-once PostgreSQL)
 - [x] Détecteur : alertes publiées sur `ecommerce-alerts` (accessories 85,7%, sport 100%, medicine 100%)
-- [x] Tests : 46/46 passés, couverture > 70% sur Python 3.11 et 3.12
+- [x] Tests : 55/55 passés, couverture 88% sur Python 3.11 et 3.12
+- [x] Résilience PostgreSQL : rollback automatique sur erreur de transaction
