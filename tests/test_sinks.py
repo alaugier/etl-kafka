@@ -20,6 +20,46 @@ def _clean_event(**overrides) -> dict:
 
 
 class TestPostgresSink:
+    @patch("modules.postgres_sink.execute_values")
+    @patch("modules.postgres_sink.psycopg2.connect")
+    def test_write_events_rolls_back_on_error(self, mock_connect, mock_execute_values):
+        mock_conn   = MagicMock()
+        mock_cursor = MagicMock()
+        mock_conn.cursor.return_value.__enter__ = lambda s: mock_cursor
+        mock_conn.cursor.return_value.__exit__  = MagicMock(return_value=False)
+        mock_execute_values.side_effect = Exception("DB error")
+
+        from modules.postgres_sink import PostgresSink
+        import pytest
+        sink = PostgresSink()
+        sink._conn = mock_conn
+
+        with pytest.raises(Exception, match="DB error"):
+            sink.write_events([_clean_event()])
+
+        mock_conn.rollback.assert_called_once()
+        mock_conn.commit.assert_not_called()
+
+    @patch("modules.postgres_sink.execute_values")
+    @patch("modules.postgres_sink.psycopg2.connect")
+    def test_update_funnel_rolls_back_on_error(self, mock_connect, mock_execute_values):
+        mock_conn   = MagicMock()
+        mock_cursor = MagicMock()
+        mock_conn.cursor.return_value.__enter__ = lambda s: mock_cursor
+        mock_conn.cursor.return_value.__exit__  = MagicMock(return_value=False)
+        mock_execute_values.side_effect = Exception("Funnel error")
+
+        from modules.postgres_sink import PostgresSink
+        import pytest
+        sink = PostgresSink()
+        sink._conn = mock_conn
+
+        with pytest.raises(Exception, match="Funnel error"):
+            sink.update_funnel([_clean_event()])
+
+        mock_conn.rollback.assert_called_once()
+        mock_conn.commit.assert_not_called()
+
     @patch("modules.postgres_sink.psycopg2.connect")
     def test_connect_creates_schema(self, mock_connect):
         mock_conn   = MagicMock()
