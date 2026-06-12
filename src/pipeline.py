@@ -13,9 +13,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 sys.path.insert(0, str(Path(__file__).parent))
-from modules.avro_deserializer import AvroDeserializer
-from modules.postgres_sink import PostgresSink
-from modules.elasticsearch_sink import ElasticsearchSink
+from modules.avro_deserializer import AvroDeserializer  # noqa: E402
+from modules.postgres_sink import PostgresSink  # noqa: E402
+from modules.elasticsearch_sink import ElasticsearchSink  # noqa: E402
 
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),

@@ -1,7 +1,5 @@
 """Unit tests for PostgresSink and ElasticsearchSink (infrastructure mocked)."""
-from unittest.mock import MagicMock, patch, call
-
-import pytest
+from unittest.mock import MagicMock, patch
 
 
 def _clean_event(**overrides) -> dict:

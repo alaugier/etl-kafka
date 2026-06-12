@@ -1,7 +1,6 @@
 """Unit tests for pipeline.ETLPipeline (all sinks and Kafka mocked)."""
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
-import pytest
 from pipeline import ETLPipeline
 
 

@@ -1,7 +1,6 @@
 """Unit tests for cart_abandonment_detector.detect_abandonment (pure logic)."""
 from datetime import datetime, timezone, timedelta
 
-import pytest
 from cart_abandonment_detector import detect_abandonment, _evict_expired_sessions, _compute_category_alerts
 
 

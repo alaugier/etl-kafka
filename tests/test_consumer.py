@@ -1,5 +1,4 @@
 """Unit tests for consumer.transform_event (pure function, no Kafka dependency)."""
-import pytest
 from consumer import transform_event
 
 

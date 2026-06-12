@@ -14,8 +14,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 sys.path.insert(0, str(Path(__file__).parent))
-from modules.avro_deserializer import AvroDeserializer
-from modules.avro_serializer import AvroSerializer
+from modules.avro_deserializer import AvroDeserializer  # noqa: E402
+from modules.avro_serializer import AvroSerializer  # noqa: E402
 
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),

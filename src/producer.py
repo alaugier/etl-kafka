@@ -6,7 +6,7 @@ import sys
 import time
 from pathlib import Path
 
-from confluent_kafka import Producer, KafkaException
+from confluent_kafka import Producer
 from confluent_kafka.admin import AdminClient, NewTopic
 from dotenv import load_dotenv
 
@@ -14,7 +14,7 @@ load_dotenv()
 
 # Allow running from project root: python src/producer.py
 sys.path.insert(0, str(Path(__file__).parent))
-from modules.avro_serializer import AvroSerializer
+from modules.avro_serializer import AvroSerializer  # noqa: E402
 
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),
