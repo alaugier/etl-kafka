@@ -93,3 +93,11 @@ class TestComputeCategoryAlerts:
 
     def test_empty_state_returns_no_alerts(self):
         assert _compute_category_alerts({}, threshold=0.5) == []
+
+    def test_session_with_empty_cart_events_ignored(self):
+        now = datetime.now(timezone.utc)
+        state = {
+            "s1": {"cart_events": [], "has_purchase": False, "category_l1": "tools", "user_id": 1, "last_seen": now},
+        }
+        alerts = _compute_category_alerts(state, threshold=0.5)
+        assert len(alerts) == 0

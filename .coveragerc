@@ -1,0 +1,9 @@
+[run]
+source = src
+omit =
+    src/data_prep.py
+
+[report]
+exclude_lines =
+    if __name__ == .__main__.:
+    pragma: no cover

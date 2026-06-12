@@ -82,3 +82,8 @@ class TestTransformEventInvalid:
 
     def test_malformed_timestamp_returns_none(self):
         assert transform_event(_base_event(event_time="not-a-date")) is None
+
+    def test_naive_timestamp_gets_utc(self):
+        result = transform_event(_base_event(event_time="2019-10-01 10:30:00"))
+        assert result is not None
+        assert result["event_time"].endswith("+00:00")

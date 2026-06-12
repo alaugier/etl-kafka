@@ -37,7 +37,7 @@ _ALERT_INTERVAL_S    = 60    # seconds between category-level alert checks
 _running = True
 
 
-def _handle_signal(sig, frame) -> None:
+def _handle_signal(sig, frame) -> None:  # pragma: no cover
     global _running
     _running = False
 
@@ -134,7 +134,7 @@ def _compute_category_alerts(session_state: dict, threshold: float) -> list[dict
     return alerts
 
 
-def run_detector() -> None:
+def run_detector() -> None:  # pragma: no cover
     """Run the cart abandonment detector loop."""
     signal.signal(signal.SIGINT,  _handle_signal)
     signal.signal(signal.SIGTERM, _handle_signal)

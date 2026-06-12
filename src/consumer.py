@@ -35,7 +35,7 @@ _REQUIRED_FIELDS   = {"event_time", "event_type", "product_id", "user_id", "user
 _running = True
 
 
-def _handle_signal(sig, frame) -> None:
+def _handle_signal(sig, frame) -> None:  # pragma: no cover
     global _running
     logger.info("Shutdown signal received")
     _running = False
@@ -95,7 +95,7 @@ def transform_event(raw: dict) -> dict | None:
     }
 
 
-def _ensure_topic(topic: str, num_partitions: int = 6, retention_ms: int = 172_800_000) -> None:
+def _ensure_topic(topic: str, num_partitions: int = 6, retention_ms: int = 172_800_000) -> None:  # pragma: no cover
     admin = AdminClient({"bootstrap.servers": _BOOTSTRAP})
     meta  = admin.list_topics(timeout=10)
     if topic in meta.topics:
@@ -114,7 +114,7 @@ def _ensure_topic(topic: str, num_partitions: int = 6, retention_ms: int = 172_8
             logger.warning("Topic creation skipped (%s): %s", t, e)
 
 
-def run_consumer() -> None:
+def run_consumer() -> None:  # pragma: no cover
     """Run the ETL consumer: ecommerce-raw → transform → ecommerce-clean."""
     signal.signal(signal.SIGINT,  _handle_signal)
     signal.signal(signal.SIGTERM, _handle_signal)
