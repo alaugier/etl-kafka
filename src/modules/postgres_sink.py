@@ -93,9 +93,13 @@ class PostgresSink:
             VALUES %s
             ON CONFLICT (user_session, event_time, product_id, event_type) DO NOTHING
         """
-        with self._conn.cursor() as cur:
-            execute_values(cur, sql, rows)
-        self._conn.commit()
+        try:
+            with self._conn.cursor() as cur:
+                execute_values(cur, sql, rows)
+            self._conn.commit()
+        except Exception:
+            self._conn.rollback()
+            raise
         logger.debug("Upserted %d events to PostgreSQL", len(rows))
         return len(rows)
 
@@ -132,7 +136,11 @@ class PostgresSink:
                 cart_count     = category_funnel.cart_count     + EXCLUDED.cart_count,
                 purchase_count = category_funnel.purchase_count + EXCLUDED.purchase_count
         """
-        with self._conn.cursor() as cur:
-            execute_values(cur, sql, rows)
-        self._conn.commit()
+        try:
+            with self._conn.cursor() as cur:
+                execute_values(cur, sql, rows)
+            self._conn.commit()
+        except Exception:
+            self._conn.rollback()
+            raise
         logger.debug("Updated funnel for %d category/date pairs", len(rows))
